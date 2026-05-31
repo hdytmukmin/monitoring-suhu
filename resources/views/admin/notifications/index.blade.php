@@ -50,9 +50,18 @@
                                 </span>
                             </td>
                             <td class="px-5 py-4 text-right">
-                                <a href="{{ route('admin.notifications.edit', $setting) }}" class="font-medium text-zinc-950 hover:underline">
-                                    Edit
-                                </a>
+                                <div class="flex justify-end gap-3">
+                                    <a href="{{ route('admin.notifications.edit', $setting) }}" class="font-medium text-zinc-950 hover:underline">
+                                        Edit
+                                    </a>
+                                    <form action="{{ route('admin.notifications.destroy', $setting) }}" method="POST" onsubmit="return confirm('Hapus atau nonaktifkan pengaturan notifikasi ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="font-medium text-red-700 hover:underline">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

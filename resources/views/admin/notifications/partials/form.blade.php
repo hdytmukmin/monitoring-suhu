@@ -4,7 +4,12 @@
         <p class="mt-1 text-sm text-zinc-500">{{ $description }}</p>
     </div>
 
-    <form action="#" method="POST" class="space-y-5 p-5">
+    <form action="{{ $action }}" method="POST" class="space-y-5 p-5">
+        @csrf
+        @if ($method !== 'POST')
+            @method($method)
+        @endif
+
         <div class="grid gap-5 sm:grid-cols-2">
             <div>
                 <label for="channel" class="text-sm font-medium text-zinc-700">Channel</label>
@@ -15,6 +20,9 @@
                         </option>
                     @endforeach
                 </select>
+                @error('channel')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -27,6 +35,9 @@
                         </option>
                     @endforeach
                 </select>
+                @error('room_id')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
         </div>
 
@@ -41,6 +52,9 @@
                 placeholder="Chat ID Telegram atau nomor WhatsApp"
             >
             <p class="mt-2 text-xs text-zinc-500">Telegram memakai chat ID. WhatsApp memakai nomor tujuan sesuai format provider API.</p>
+            @error('recipient')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <div>
@@ -57,6 +71,9 @@
                 >
                 <span class="inline-flex h-10 items-center rounded-r-md border border-l-0 border-zinc-300 bg-zinc-50 px-3 text-sm text-zinc-500">menit</span>
             </div>
+            @error('cooldown_minutes')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="rounded-md border border-sky-200 bg-sky-50 p-4 text-sm text-sky-800">
@@ -75,7 +92,7 @@
             <a href="{{ route('admin.notifications.index') }}" class="rounded-md border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50">
                 Batal
             </a>
-            <button type="button" class="rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800">
+            <button type="submit" class="rounded-md bg-zinc-950 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zinc-800">
                 Simpan
             </button>
         </div>

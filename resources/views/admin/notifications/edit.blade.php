@@ -8,5 +8,7 @@
     @include('admin.notifications.partials.form', [
         'title' => 'Form Edit Channel',
         'description' => 'Tampilan edit disiapkan dulu. Credential provider tetap diatur lewat environment/config.',
+        'action' => route('admin.notifications.update', $notificationSetting),
+        'method' => 'PUT',
     ])
 @endsection

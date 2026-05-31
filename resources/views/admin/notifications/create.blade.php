@@ -7,6 +7,8 @@
 @section('content')
     @include('admin.notifications.partials.form', [
         'title' => 'Form Tambah Channel',
-        'description' => 'Tampilan form disiapkan dulu. Proses simpan credential dan recipient akan kita sambungkan pada tahap CRUD.',
+        'description' => 'Tambahkan channel tujuan alert suhu. Credential provider tetap disimpan di environment.',
+        'action' => route('admin.notifications.store'),
+        'method' => 'POST',
     ])
 @endsection

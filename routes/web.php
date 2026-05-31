@@ -31,7 +31,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/notifications', [NotificationSettingController::class, 'index'])->name('notifications.index');
     Route::get('/notifications/create', [NotificationSettingController::class, 'create'])->name('notifications.create');
+    Route::post('/notifications', [NotificationSettingController::class, 'store'])->name('notifications.store');
     Route::get('/notifications/{notificationSetting}/edit', [NotificationSettingController::class, 'edit'])->name('notifications.edit');
+    Route::put('/notifications/{notificationSetting}', [NotificationSettingController::class, 'update'])->name('notifications.update');
+    Route::delete('/notifications/{notificationSetting}', [NotificationSettingController::class, 'destroy'])->name('notifications.destroy');
 
     Route::get('/notification-logs', [NotificationLogController::class, 'index'])->name('notification-logs.index');
 });
