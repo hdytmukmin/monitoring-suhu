@@ -30,29 +30,17 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-    <div class="rounded-[22px] border p-5 shadow-xl {{ $statusClass }}">
-        <p class="text-sm font-medium opacity-80">Status</p>
-        <p class="mt-3 text-3xl font-semibold">{{ $status?->label() ?? 'Normal' }}</p>
-=======
     <div class="rounded-[22px] border p-5 shadow-xl xl:p-6 2xl:p-8 {{ $statusClass }}">
         <p class="text-sm font-medium opacity-80 2xl:text-base">Status</p>
         <p class="mt-3 text-3xl font-semibold xl:text-4xl 2xl:text-5xl">{{ $status?->label() ?? 'Normal' }}</p>
->>>>>>> 0727218 (responsive)
         <p class="mt-3 text-sm opacity-80">Auto-refresh setiap 30 detik.</p>
     </div>
 
     <div class="overflow-hidden rounded-[22px] border border-sky-100 bg-white shadow-xl shadow-emerald-950/5">
         <div class="h-1 bg-sky-500"></div>
-<<<<<<< HEAD
-        <div class="p-5">
-        <p class="text-sm font-medium text-sky-700">Kelembapan</p>
-        <p class="mt-3 text-3xl font-semibold tabular-nums text-zinc-950">
-=======
         <div class="p-5 xl:p-6 2xl:p-8">
         <p class="text-sm font-medium text-sky-700 2xl:text-base">Kelembapan</p>
         <p class="mt-3 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">
->>>>>>> 0727218 (responsive)
             {{ $latest?->humidity !== null ? number_format((float) $latest->humidity, 1).'%' : '-' }}
         </p>
         <p class="mt-3 text-sm text-zinc-500">Tersedia bila sensor mengirim humidity.</p>
