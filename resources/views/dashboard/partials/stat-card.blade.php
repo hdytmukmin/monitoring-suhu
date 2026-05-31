@@ -7,7 +7,7 @@
     };
 @endphp
 
-<div class="rounded-[22px] border bg-white p-5 shadow-xl shadow-emerald-950/5 {{ $toneClass }}">
-    <p class="text-sm font-medium opacity-80">{{ $label }}</p>
-    <p class="mt-2 text-3xl font-semibold tabular-nums text-zinc-950">{{ $value }}</p>
+<div class="rounded-[22px] border bg-white p-5 shadow-xl shadow-emerald-950/5 xl:p-6 2xl:p-8 {{ $toneClass }}">
+    <p class="text-sm font-medium opacity-80 2xl:text-base">{{ $label }}</p>
+    <p class="mt-2 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">{{ $value }}</p>
 </div>

@@ -8,9 +8,9 @@
     <section class="mb-8 overflow-hidden rounded-[28px] bg-emerald-950 text-white shadow-2xl shadow-emerald-950/10">
         <div class="grid gap-8 bg-[linear-gradient(110deg,#064e3b_0%,#047857_58%,#bbf7d0_100%)] px-7 py-10 lg:grid-cols-[1fr_620px] lg:items-center">
             <div>
-                <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-100">Control Center</p>
-                <h2 class="mt-4 text-4xl font-bold tracking-tight text-white">Halo, Super Admin</h2>
-                <p class="mt-3 max-w-2xl text-base text-emerald-50">Pantau kesehatan device, pembacaan sensor, dan alert suhu dari satu ruang kerja yang ringkas.</p>
+                <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-100">Monitoring Suhu</p>
+                <h2 class="mt-4 text-4xl font-bold tracking-tight text-white">Pantau Suhu Ruangan</h2>
+                <p class="mt-3 max-w-2xl text-base text-emerald-50">Lihat kondisi ruangan, pembacaan sensor terbaru, dan peringatan suhu dari satu dashboard yang ringkas.</p>
                 <a href="{{ route('admin.readings.index') }}" class="mt-8 inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-bold text-emerald-900 shadow-sm hover:bg-emerald-50">
                     Lihat Histori
                 </a>
@@ -18,24 +18,24 @@
 
             <div class="grid gap-4 sm:grid-cols-2">
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Ruangan</p>
+                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Total Ruangan</p>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['rooms']) }}</p>
-                    <p class="mt-2 text-sm text-emerald-50">Total ruangan terdaftar</p>
+                    <p class="mt-2 text-sm text-emerald-50">Ruangan yang dipantau</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Device Aktif</p>
+                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Sensor Aktif</p>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['active_devices']) }}</p>
-                    <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['online_devices']) }} online 5 menit terakhir</p>
+                    <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['online_devices']) }} mengirim data terbaru</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Reading Hari Ini</p>
+                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Data Hari Ini</p>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['readings_today']) }}</p>
-                    <p class="mt-2 text-sm text-emerald-50">Data suhu masuk hari ini</p>
+                    <p class="mt-2 text-sm text-emerald-50">Pembacaan suhu diterima</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Alert Pending</p>
+                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Peringatan Suhu</p>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['pending_alerts']) }}</p>
-                    <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['failed_alerts']) }} alert gagal</p>
+                    <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['failed_alerts']) }} notifikasi gagal terkirim</p>
                 </div>
             </div>
         </div>
@@ -49,40 +49,40 @@
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['rooms']) }}</p>
                     <p class="mt-3 text-sm text-slate-500">Ruangan monitoring aktif.</p>
                 </div>
-                <span class="flex h-13 w-13 items-center justify-center rounded-2xl bg-emerald-100 text-sm font-bold text-emerald-700">RG</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-sm font-bold text-emerald-700">RG</span>
             </div>
         </div>
 
         <div class="rounded-[22px] border border-amber-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Device Aktif</p>
+                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Sensor Aktif</p>
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['active_devices']) }}</p>
-                    <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['online_devices']) }} online 5 menit terakhir.</p>
+                    <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['online_devices']) }} baru mengirim data.</p>
                 </div>
-                <span class="flex h-13 w-13 items-center justify-center rounded-2xl bg-amber-100 text-sm font-bold text-amber-700">DV</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-sm font-bold text-amber-700">SN</span>
             </div>
         </div>
 
         <div class="rounded-[22px] border border-teal-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Reading Hari Ini</p>
+                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Data Hari Ini</p>
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['readings_today']) }}</p>
-                    <p class="mt-3 text-sm text-slate-500">Data sensor diterima.</p>
+                    <p class="mt-3 text-sm text-slate-500">Pembacaan suhu diterima.</p>
                 </div>
-                <span class="flex h-13 w-13 items-center justify-center rounded-2xl bg-teal-100 text-sm font-bold text-teal-700">SN</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-sm font-bold text-teal-700">°C</span>
             </div>
         </div>
 
         <div class="rounded-[22px] border border-red-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Alert Pending</p>
+                    <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Peringatan Suhu</p>
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['pending_alerts']) }}</p>
-                    <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['failed_alerts']) }} alert gagal.</p>
+                    <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['failed_alerts']) }} notifikasi gagal.</p>
                 </div>
-                <span class="flex h-13 w-13 items-center justify-center rounded-2xl bg-red-100 text-sm font-bold text-red-700">AL</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-sm font-bold text-red-700">AL</span>
             </div>
         </div>
     </div>

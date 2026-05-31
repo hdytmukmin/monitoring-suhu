@@ -17,7 +17,18 @@
     .admin-shell input,
     .admin-shell select,
     .admin-shell textarea {
+        color: #0f172a;
         outline: none;
+    }
+
+    .admin-shell option {
+        color: #0f172a;
+        background: #ffffff;
+    }
+
+    .admin-shell input::placeholder,
+    .admin-shell textarea::placeholder {
+        color: #64748b;
     }
 
     .admin-shell input:focus,

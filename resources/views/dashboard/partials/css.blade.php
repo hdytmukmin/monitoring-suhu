@@ -8,7 +8,17 @@
 
     .dashboard-shell input,
     .dashboard-shell select {
+        color: #0f172a;
         outline: none;
+    }
+
+    .dashboard-shell option {
+        color: #0f172a;
+        background: #ffffff;
+    }
+
+    .dashboard-shell input::placeholder {
+        color: #64748b;
     }
 
     .dashboard-shell input:focus,

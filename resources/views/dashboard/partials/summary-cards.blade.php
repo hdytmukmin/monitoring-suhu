@@ -1,4 +1,4 @@
-<section class="grid gap-4 lg:grid-cols-3">
+<section class="grid gap-4 md:grid-cols-3 2xl:gap-6">
     @include('dashboard.partials.stat-card', [
         'label' => 'Minimum hari ini',
         'value' => $stats['min'] !== null ? number_format((float) $stats['min'], 1).' C' : '-',
