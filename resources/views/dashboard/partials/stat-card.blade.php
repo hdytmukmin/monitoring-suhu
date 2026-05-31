@@ -1,4 +1,13 @@
-<div class="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm">
-    <p class="text-sm font-medium text-zinc-500">{{ $label }}</p>
-    <p class="mt-2 text-3xl font-semibold tabular-nums">{{ $value }}</p>
+@php
+    $toneClass = match ($tone ?? 'teal') {
+        'sky' => 'border-sky-200 bg-sky-50 text-sky-700',
+        'red' => 'border-red-200 bg-red-50 text-red-700',
+        'amber' => 'border-amber-200 bg-amber-50 text-amber-700',
+        default => 'border-teal-200 bg-teal-50 text-teal-700',
+    };
+@endphp
+
+<div class="rounded-[22px] border bg-white p-5 shadow-xl shadow-emerald-950/5 {{ $toneClass }}">
+    <p class="text-sm font-medium opacity-80">{{ $label }}</p>
+    <p class="mt-2 text-3xl font-semibold tabular-nums text-zinc-950">{{ $value }}</p>
 </div>

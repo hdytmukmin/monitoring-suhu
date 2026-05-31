@@ -11,7 +11,7 @@
     @include('dashboard.partials.css')
     @stack('styles')
 </head>
-<body class="bg-zinc-50 text-zinc-950 antialiased">
+<body class="dashboard-shell text-zinc-950 antialiased">
     @yield('content')
 
     @stack('scripts')

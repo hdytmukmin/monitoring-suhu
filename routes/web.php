@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DeviceController;
 use App\Http\Controllers\Admin\NotificationLogController;
 use App\Http\Controllers\Admin\NotificationSettingController;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', DashboardController::class)->name('dashboard');
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::view('/', 'admin.dashboard.index')->name('dashboard');
+    Route::get('/', AdminDashboardController::class)->name('dashboard');
     Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
     Route::get('/rooms/create', [RoomController::class, 'create'])->name('rooms.create');
     Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
