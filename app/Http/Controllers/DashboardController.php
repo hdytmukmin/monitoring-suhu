@@ -10,6 +10,55 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
+        return view('dashboard.index', $this->dashboardPayload($request));
+    }
+
+    public function data(Request $request)
+    {
+        $payload = $this->dashboardPayload($request);
+
+        return response()->json([
+            'latest' => $payload['latest'] ? [
+                'temperature' => number_format((float) $payload['latest']->temperature, 1),
+                'humidity' => $payload['latest']->humidity !== null ? number_format((float) $payload['latest']->humidity, 1).'%' : '-',
+                'room' => $payload['latest']->room?->name ?? 'Belum ada data sensor',
+                'device' => $payload['latest']->device?->name,
+                'recorded_at' => $payload['latest']->recorded_at?->format('d M Y H:i:s') ?? '-',
+                'status' => [
+                    'value' => $payload['latest']->status->value,
+                    'label' => $payload['latest']->status->label(),
+                ],
+            ] : [
+                'temperature' => '--',
+                'humidity' => '-',
+                'room' => 'Belum ada data sensor',
+                'device' => null,
+                'recorded_at' => '-',
+                'status' => [
+                    'value' => 'normal',
+                    'label' => 'Normal',
+                ],
+            ],
+            'stats' => [
+                'min' => $payload['stats']['min'] !== null ? number_format((float) $payload['stats']['min'], 1).' C' : '-',
+                'max' => $payload['stats']['max'] !== null ? number_format((float) $payload['stats']['max'], 1).' C' : '-',
+                'avg' => $payload['stats']['avg'] !== null ? number_format((float) $payload['stats']['avg'], 1).' C' : '-',
+            ],
+            'chart' => [
+                'labels' => $payload['chartLabels'],
+                'values' => $payload['chartValues'],
+            ],
+            'recent_readings' => $payload['recentReadings']->map(fn ($reading) => [
+                'time' => $reading->recorded_at->format('H:i:s'),
+                'room' => $reading->room?->name ?? '-',
+                'temperature' => number_format((float) $reading->temperature, 1).' C',
+                'status' => $reading->status->value,
+            ])->values(),
+        ]);
+    }
+
+    private function dashboardPayload(Request $request): array
+    {
         $roomId = $request->integer('room_id') ?: null;
         $date = $request->date('date')?->startOfDay() ?? today();
 
@@ -42,7 +91,7 @@ class DashboardController extends Controller
             ->limit(20)
             ->get();
 
-        return view('dashboard.index', [
+        return [
             'rooms' => $rooms,
             'selectedRoomId' => $roomId,
             'selectedDate' => $date,
@@ -51,6 +100,6 @@ class DashboardController extends Controller
             'recentReadings' => $recentReadings,
             'chartLabels' => $dailyReadings->map(fn ($reading) => $reading->recorded_at->format('H:i'))->values(),
             'chartValues' => $dailyReadings->map(fn ($reading) => (float) $reading->temperature)->values(),
-        ]);
+        ];
     }
 }

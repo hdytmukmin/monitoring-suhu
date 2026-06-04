@@ -16,10 +16,6 @@ class TemperatureReadingSeeder extends Seeder
      */
     public function run(): void
     {
-        if (TemperatureReading::query()->exists()) {
-            return;
-        }
-
         $room = Room::query()->where('is_active', true)->first()
             ?? Room::query()->create([
                 'name' => 'Ruang Server',
@@ -49,6 +45,16 @@ class TemperatureReadingSeeder extends Seeder
         for ($dayOffset = 6; $dayOffset >= 0; $dayOffset--) {
             $date = $now->copy()->subDays($dayOffset)->startOfDay();
 
+            $hasReadingsForDate = TemperatureReading::query()
+                ->where('room_id', $room->id)
+                ->where('device_id', $device->id)
+                ->whereBetween('recorded_at', [$date->copy()->startOfDay(), $date->copy()->endOfDay()])
+                ->exists();
+
+            if ($hasReadingsForDate) {
+                continue;
+            }
+
             foreach ([7, 9, 11, 13, 15, 17, 19, 21] as $hour) {
                 $recordedAt = $date->copy()->setTime($hour, random_int(0, 45));
                 $temperature = $this->temperatureFor($hour, $dayOffset);
@@ -64,6 +70,10 @@ class TemperatureReadingSeeder extends Seeder
                     'updated_at' => Carbon::now(),
                 ];
             }
+        }
+
+        if ($readings === []) {
+            return;
         }
 
         TemperatureReading::query()->insert($readings);

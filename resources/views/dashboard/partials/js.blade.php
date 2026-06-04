@@ -1,10 +1,45 @@
 <script>
-    const labels = @json($chartLabels);
-    const values = @json($chartValues);
+    let labels = @json($chartLabels);
+    let values = @json($chartValues);
+
+    const dashboardDataUrl = @json(route('dashboard.data'));
     const canvas = document.getElementById('temperatureChart');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas?.getContext('2d');
+
+    const statusCardClasses = {
+        normal: 'border-emerald-200 bg-emerald-50 text-emerald-800 shadow-emerald-100/70',
+        warning: 'border-amber-200 bg-amber-50 text-amber-800 shadow-amber-100/70',
+        danger: 'border-red-200 bg-red-50 text-red-800 shadow-red-100/70',
+    };
+
+    const statusIconClasses = {
+        normal: 'bg-emerald-100 text-emerald-700',
+        warning: 'bg-amber-100 text-amber-700',
+        danger: 'bg-red-100 text-red-700',
+    };
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function readingTone(status) {
+        return {
+            danger: 'border-red-100 bg-red-50 text-red-700',
+            warning: 'border-amber-100 bg-amber-50 text-amber-700',
+            normal: 'border-emerald-100 bg-emerald-50 text-emerald-700',
+        }[status] ?? 'border-emerald-100 bg-emerald-50 text-emerald-700';
+    }
 
     function drawChart() {
+        if (!canvas || !ctx) {
+            return;
+        }
+
         const ratio = window.devicePixelRatio || 1;
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
@@ -66,6 +101,103 @@
         }
     }
 
+    function updateText(id, value) {
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.textContent = value;
+        }
+    }
+
+    function updateStatusClasses(status) {
+        const card = document.getElementById('latestStatusCard');
+        const icon = document.getElementById('latestStatusIcon');
+
+        if (card) {
+            card.className = `rounded-[22px] border p-5 shadow-xl xl:p-6 2xl:p-8 ${statusCardClasses[status] ?? statusCardClasses.normal}`;
+        }
+
+        if (icon) {
+            icon.className = `flex h-11 w-11 items-center justify-center rounded-2xl ${statusIconClasses[status] ?? statusIconClasses.normal}`;
+        }
+    }
+
+    function renderRecentReadings(readings) {
+        const body = document.getElementById('recentReadingsBody');
+
+        if (!body) {
+            return;
+        }
+
+        if (!readings.length) {
+            body.innerHTML = `
+                <tr>
+                    <td colspan="3" class="py-10 text-center">
+                        <div class="mx-auto flex max-w-xs flex-col items-center gap-3 text-zinc-500">
+                            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">SN</span>
+                            <span>Belum ada histori suhu.</span>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        body.innerHTML = readings.map((reading) => `
+            <tr class="group">
+                <td class="rounded-l-2xl border-y border-l border-zinc-100 bg-white px-3 py-3 text-zinc-600 shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                    ${escapeHtml(reading.time)}
+                </td>
+                <td class="border-y border-zinc-100 bg-white px-3 py-3 font-medium text-zinc-900 shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                    ${escapeHtml(reading.room)}
+                </td>
+                <td class="rounded-r-2xl border-y border-r border-zinc-100 bg-white px-3 py-3 text-right shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                    <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold tabular-nums ${readingTone(reading.status)}">
+                        ${escapeHtml(reading.temperature)}
+                    </span>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    async function refreshDashboard() {
+        const url = new URL(dashboardDataUrl, window.location.origin);
+        const currentParams = new URLSearchParams(window.location.search);
+        currentParams.forEach((value, key) => url.searchParams.set(key, value));
+
+        try {
+            const response = await fetch(url, {
+                headers: { Accept: 'application/json' },
+            });
+
+            if (!response.ok) {
+                return;
+            }
+
+            const payload = await response.json();
+            const latest = payload.latest;
+
+            updateText('latestTemperature', latest.temperature);
+            updateText('latestHumidity', latest.humidity);
+            updateText('latestRoom', latest.room);
+            updateText('latestDevice', latest.device ? ` / ${latest.device}` : '');
+            updateText('latestRecordedAt', latest.recorded_at);
+            updateText('latestStatusLabel', latest.status.label);
+            updateText('statMin', payload.stats.min);
+            updateText('statMax', payload.stats.max);
+            updateText('statAvg', payload.stats.avg);
+            updateStatusClasses(latest.status.value);
+
+            labels = payload.chart.labels;
+            values = payload.chart.values;
+            renderRecentReadings(payload.recent_readings);
+            drawChart();
+        } catch (error) {
+            console.warn('Dashboard refresh gagal.', error);
+        }
+    }
+
     drawChart();
     window.addEventListener('resize', drawChart);
+    window.setInterval(refreshDashboard, 30000);
 </script>

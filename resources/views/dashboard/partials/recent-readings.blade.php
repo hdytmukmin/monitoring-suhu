@@ -13,7 +13,7 @@
                     <th class="px-3 py-2 text-right">Suhu</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="recentReadingsBody">
                 @forelse ($recentReadings as $reading)
                     @php
                         $statusTone = match ($reading->status->value) {

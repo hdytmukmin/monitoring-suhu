@@ -20,7 +20,7 @@
                 <div>
                     <p class="text-sm font-medium text-teal-700 2xl:text-base">Suhu terbaru</p>
                     <div class="mt-3 flex items-end gap-3">
-                        <p class="text-5xl font-semibold tabular-nums text-zinc-950 xl:text-6xl 2xl:text-7xl">
+                        <p id="latestTemperature" class="text-5xl font-semibold tabular-nums text-zinc-950 xl:text-6xl 2xl:text-7xl">
                             {{ $latest ? number_format((float) $latest->temperature, 1) : '--' }}
                         </p>
                         <p class="pb-2 text-lg font-medium text-zinc-500 xl:text-xl 2xl:text-2xl">C</p>
@@ -31,26 +31,24 @@
                 </div>
             </div>
             <p class="mt-3 text-sm text-zinc-600">
-                {{ $latest?->room?->name ?? 'Belum ada data sensor' }}
-                @if ($latest?->device)
-                    <span class="text-zinc-400">/ {{ $latest->device->name }}</span>
-                @endif
+                <span id="latestRoom">{{ $latest?->room?->name ?? 'Belum ada data sensor' }}</span>
+                <span id="latestDevice" class="text-zinc-400">@if ($latest?->device) / {{ $latest->device->name }} @endif</span>
             </p>
             <p class="mt-1 text-xs text-zinc-500">
-                Update terakhir: {{ $latest?->recorded_at?->format('d M Y H:i:s') ?? '-' }}
+                Update terakhir: <span id="latestRecordedAt">{{ $latest?->recorded_at?->format('d M Y H:i:s') ?? '-' }}</span>
             </p>
         </div>
     </div>
 
-    <div class="rounded-[22px] border p-5 shadow-xl xl:p-6 2xl:p-8 {{ $statusClass }}">
+    <div id="latestStatusCard" class="rounded-[22px] border p-5 shadow-xl xl:p-6 2xl:p-8 {{ $statusClass }}">
         <div class="flex items-center justify-between gap-4">
             <p class="text-sm font-medium opacity-80 2xl:text-base">Status</p>
-            <div class="flex h-11 w-11 items-center justify-center rounded-2xl {{ $statusIconClass }}">
+            <div id="latestStatusIcon" class="flex h-11 w-11 items-center justify-center rounded-2xl {{ $statusIconClass }}">
                 @include('dashboard.partials.icon', ['name' => 'gauge', 'class' => 'h-6 w-6'])
             </div>
         </div>
-        <p class="mt-3 text-3xl font-semibold xl:text-4xl 2xl:text-5xl">{{ $status?->label() ?? 'Normal' }}</p>
-        <p class="mt-3 text-sm opacity-80">Auto-refresh setiap 30 detik.</p>
+        <p id="latestStatusLabel" class="mt-3 text-3xl font-semibold xl:text-4xl 2xl:text-5xl">{{ $status?->label() ?? 'Normal' }}</p>
+        <p class="mt-3 text-sm opacity-80">Update otomatis tanpa reload.</p>
     </div>
 
     <div class="overflow-hidden rounded-[22px] border border-sky-100 bg-white shadow-xl shadow-emerald-950/5">
@@ -62,7 +60,7 @@
                     @include('dashboard.partials.icon', ['name' => 'droplet', 'class' => 'h-6 w-6'])
                 </div>
             </div>
-            <p class="mt-3 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">
+            <p id="latestHumidity" class="mt-3 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">
                 {{ $latest?->humidity !== null ? number_format((float) $latest->humidity, 1).'%' : '-' }}
             </p>
             <p class="mt-3 text-sm text-zinc-500">Tersedia bila sensor mengirim humidity.</p>

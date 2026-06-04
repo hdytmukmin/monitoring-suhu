@@ -26,5 +26,5 @@
             @include('dashboard.partials.icon', ['name' => $iconName, 'class' => 'h-5 w-5'])
         </div>
     </div>
-    <p class="mt-2 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">{{ $value }}</p>
+    <p @isset($valueId) id="{{ $valueId }}" @endisset class="mt-2 text-3xl font-semibold tabular-nums text-zinc-950 xl:text-4xl 2xl:text-5xl">{{ $value }}</p>
 </div>
