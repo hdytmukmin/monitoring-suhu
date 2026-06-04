@@ -1,11 +1,11 @@
 @php
     $menus = [
-        ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'pattern' => 'admin', 'group' => 'Overview', 'mark' => 'DB'],
-        ['label' => 'Ruangan', 'route' => 'admin.rooms.index', 'pattern' => 'admin/rooms*', 'group' => 'Master Data', 'mark' => 'RG'],
-        ['label' => 'Device', 'route' => 'admin.devices.index', 'pattern' => 'admin/devices*', 'group' => 'Master Data', 'mark' => 'DV'],
-        ['label' => 'Histori Suhu', 'route' => 'admin.readings.index', 'pattern' => 'admin/readings*', 'group' => 'Monitoring', 'mark' => 'HS'],
-        ['label' => 'Notifikasi', 'route' => 'admin.notifications.index', 'pattern' => 'admin/notifications*', 'group' => 'Monitoring', 'mark' => 'NT'],
-        ['label' => 'Log Notifikasi', 'route' => 'admin.notification-logs.index', 'pattern' => 'admin/notification-logs*', 'group' => 'Monitoring', 'mark' => 'LN'],
+        ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'pattern' => 'admin', 'group' => 'Overview', 'icon' => 'gauge'],
+        ['label' => 'Ruangan', 'route' => 'admin.rooms.index', 'pattern' => 'admin/rooms*', 'group' => 'Master Data', 'icon' => 'sensor'],
+        ['label' => 'Device', 'route' => 'admin.devices.index', 'pattern' => 'admin/devices*', 'group' => 'Master Data', 'icon' => 'sensor'],
+        ['label' => 'Histori Suhu', 'route' => 'admin.readings.index', 'pattern' => 'admin/readings*', 'group' => 'Monitoring', 'icon' => 'chart'],
+        ['label' => 'Notifikasi', 'route' => 'admin.notifications.index', 'pattern' => 'admin/notifications*', 'group' => 'Monitoring', 'icon' => 'thermometer'],
+        ['label' => 'Log Notifikasi', 'route' => 'admin.notification-logs.index', 'pattern' => 'admin/notification-logs*', 'group' => 'Monitoring', 'icon' => 'gauge'],
     ];
 
     $currentGroup = null;
@@ -17,8 +17,8 @@
 >
     <div class="flex h-[76px] items-center justify-between border-b border-emerald-100 px-8">
         <a href="{{ route('admin.dashboard') }}" class="flex min-w-0 items-center gap-3 rounded-md">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-sm font-bold text-white shadow-sm shadow-emerald-200">
-                MS
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#059669,#0ea5e9)] text-white shadow-sm shadow-emerald-200">
+                @include('dashboard.partials.icon', ['name' => 'thermometer', 'class' => 'h-6 w-6'])
             </span>
             <span class="min-w-0">
                 <span class="block truncate text-xl font-bold text-emerald-950">SuhuMon</span>
@@ -55,8 +55,8 @@
                 class="mb-3 flex items-center justify-between rounded-2xl border px-4 py-3 text-base font-bold transition {{ $isActive ? 'border-emerald-700 bg-emerald-700 text-white shadow-lg shadow-emerald-100' : 'border-emerald-100 bg-white text-slate-600 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900' }}"
             >
                 <span class="flex min-w-0 items-center gap-3">
-                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold {{ $isActive ? 'bg-white/15 text-white' : 'bg-slate-100 text-slate-500' }}">
-                        {{ $menu['mark'] }}
+                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg {{ $isActive ? 'bg-white/15 text-white' : 'bg-emerald-50 text-emerald-700' }}">
+                        @include('dashboard.partials.icon', ['name' => $menu['icon'], 'class' => 'h-4 w-4'])
                     </span>
                     <span class="truncate">{{ $menu['label'] }}</span>
                 </span>
@@ -72,7 +72,10 @@
             href="{{ route('dashboard') }}"
             class="flex items-center justify-between rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800 transition hover:border-emerald-200 hover:bg-white"
         >
-            <span>Lihat Dashboard</span>
+            <span class="flex items-center gap-2">
+                @include('dashboard.partials.icon', ['name' => 'chart', 'class' => 'h-4 w-4'])
+                Lihat Dashboard
+            </span>
             <span aria-hidden="true">-&gt;</span>
         </a>
     </div>

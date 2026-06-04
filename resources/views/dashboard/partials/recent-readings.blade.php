@@ -5,26 +5,47 @@
     </div>
 
     <div class="overflow-x-auto px-5 py-4 2xl:px-7">
-        <table class="w-full text-left text-sm">
-            <thead class="border-b border-zinc-200 text-xs uppercase text-zinc-500">
+        <table class="w-full min-w-[420px] border-separate border-spacing-y-2 text-left text-sm">
+            <thead class="text-xs uppercase text-zinc-500">
                 <tr>
-                    <th class="py-3 pr-3">Waktu</th>
-                    <th class="py-3 pr-3">Ruang</th>
-                    <th class="py-3 text-right">Suhu</th>
+                    <th class="px-3 py-2">Waktu</th>
+                    <th class="px-3 py-2">Ruang</th>
+                    <th class="px-3 py-2 text-right">Suhu</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-zinc-100">
+            <tbody>
                 @forelse ($recentReadings as $reading)
-                    <tr>
-                        <td class="py-3 pr-3 text-zinc-600">{{ $reading->recorded_at->format('H:i:s') }}</td>
-                        <td class="py-3 pr-3 font-medium text-zinc-900">{{ $reading->room->name }}</td>
-                        <td class="py-3 text-right font-semibold tabular-nums text-zinc-950">
-                            {{ number_format((float) $reading->temperature, 1) }} C
+                    @php
+                        $statusTone = match ($reading->status->value) {
+                            'danger' => 'border-red-100 bg-red-50 text-red-700',
+                            'warning' => 'border-amber-100 bg-amber-50 text-amber-700',
+                            default => 'border-emerald-100 bg-emerald-50 text-emerald-700',
+                        };
+                    @endphp
+                    <tr class="group">
+                        <td class="rounded-l-2xl border-y border-l border-zinc-100 bg-white px-3 py-3 text-zinc-600 shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                            {{ $reading->recorded_at->format('H:i:s') }}
+                        </td>
+                        <td class="border-y border-zinc-100 bg-white px-3 py-3 font-medium text-zinc-900 shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                            {{ $reading->room->name }}
+                        </td>
+                        <td class="rounded-r-2xl border-y border-r border-zinc-100 bg-white px-3 py-3 text-right shadow-sm transition group-hover:border-emerald-100 group-hover:bg-emerald-50/40">
+                            <span class="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-bold tabular-nums {{ $statusTone }}">
+                                @include('dashboard.partials.icon', ['name' => 'thermometer', 'class' => 'h-3.5 w-3.5'])
+                                {{ number_format((float) $reading->temperature, 1) }} C
+                            </span>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="py-8 text-center text-zinc-500">Belum ada histori suhu.</td>
+                        <td colspan="3" class="py-10 text-center">
+                            <div class="mx-auto flex max-w-xs flex-col items-center gap-3 text-zinc-500">
+                                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+                                    @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-6 w-6'])
+                                </span>
+                                <span>Belum ada histori suhu.</span>
+                            </div>
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

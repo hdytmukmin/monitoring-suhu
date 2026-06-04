@@ -9,8 +9,7 @@
 
     .admin-shell {
         background:
-            radial-gradient(circle at top right, rgba(250, 204, 21, 0.16), transparent 26rem),
-            linear-gradient(90deg, #ffffff 0 300px, rgba(236, 253, 245, 0.88) 300px, #f8fafc 55%),
+            linear-gradient(135deg, #ffffff 0 300px, rgba(236, 253, 245, 0.9) 300px, rgba(240, 249, 255, 0.82) 62%, rgba(255, 251, 235, 0.72)),
             #f8fafc;
     }
 

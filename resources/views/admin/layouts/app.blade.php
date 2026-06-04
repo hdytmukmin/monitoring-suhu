@@ -39,14 +39,16 @@
                         <div class="hidden items-center gap-4 rounded-full border border-emerald-100 bg-white py-2 pl-4 pr-2 shadow-sm sm:flex">
                             <div class="relative">
                                 <span class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">!</span>
-                                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-50 text-lg text-emerald-700">B</span>
+                                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-50 text-orange-700">
+                                    @include('dashboard.partials.icon', ['name' => 'thermometer', 'class' => 'h-5 w-5'])
+                                </span>
                             </div>
                             <div class="text-right">
                                 <p class="text-sm font-bold text-emerald-950">Super Admin</p>
-                                <p class="text-xs font-semibold uppercase text-slate-500">Monitoring</p>
+                                <p class="text-xs font-semibold uppercase text-slate-500">Sensor Suhu</p>
                             </div>
-                            <div class="flex h-11 w-11 items-center justify-center rounded-full border-2 border-slate-950 bg-white text-sm font-bold text-slate-950">
-                                A
+                            <div class="flex h-11 w-11 items-center justify-center rounded-full border-2 border-emerald-700 bg-emerald-50 text-emerald-800">
+                                @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-5 w-5'])
                             </div>
                         </div>
                     </div>

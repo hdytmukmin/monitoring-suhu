@@ -1,6 +1,11 @@
 <div class="overflow-hidden rounded-[22px] border border-emerald-100 bg-white shadow-xl shadow-emerald-950/5">
     <div class="flex items-center justify-between gap-4 border-b border-emerald-100 bg-emerald-50 px-5 py-4 2xl:px-7 2xl:py-5">
-        <h2 class="text-lg font-semibold text-teal-950 2xl:text-xl">Grafik Suhu Harian</h2>
+        <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                @include('dashboard.partials.icon', ['name' => 'chart', 'class' => 'h-5 w-5'])
+            </div>
+            <h2 class="text-lg font-semibold text-teal-950 2xl:text-xl">Grafik Suhu Harian</h2>
+        </div>
         <p class="rounded-full bg-white px-3 py-1 text-sm font-bold text-emerald-700 2xl:px-4 2xl:py-1.5">{{ $selectedDate->format('d M Y') }}</p>
     </div>
 

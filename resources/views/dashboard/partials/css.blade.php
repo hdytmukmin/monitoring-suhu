@@ -1,8 +1,7 @@
 <style>
     .dashboard-shell {
         background:
-            radial-gradient(circle at top right, rgba(250, 204, 21, 0.14), transparent 28rem),
-            linear-gradient(180deg, rgba(236, 253, 245, 1), rgba(248, 250, 252, 1) 42%),
+            linear-gradient(135deg, rgba(236, 253, 245, 1), rgba(240, 249, 255, 0.9) 42%, rgba(255, 251, 235, 0.72)),
             #f8fafc;
     }
 

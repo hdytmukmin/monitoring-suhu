@@ -6,34 +6,50 @@
 
 @section('content')
     <section class="mb-8 overflow-hidden rounded-[28px] bg-emerald-950 text-white shadow-2xl shadow-emerald-950/10">
-        <div class="grid gap-8 bg-[linear-gradient(110deg,#064e3b_0%,#047857_58%,#bbf7d0_100%)] px-7 py-10 lg:grid-cols-[1fr_620px] lg:items-center">
+        <div class="grid gap-8 bg-[linear-gradient(110deg,#064e3b_0%,#047857_52%,#38bdf8_100%)] px-7 py-10 lg:grid-cols-[1fr_620px] lg:items-center">
             <div>
-                <p class="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-100">Monitoring Suhu</p>
+                <div class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-50 backdrop-blur">
+                    @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-4 w-4 text-cyan-100'])
+                    Monitoring Suhu
+                </div>
                 <h2 class="mt-4 text-4xl font-bold tracking-tight text-white">Pantau Suhu Ruangan</h2>
                 <p class="mt-3 max-w-2xl text-base text-emerald-50">Lihat kondisi ruangan, pembacaan sensor terbaru, dan peringatan suhu dari satu dashboard yang ringkas.</p>
                 <a href="{{ route('admin.readings.index') }}" class="mt-8 inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-bold text-emerald-900 shadow-sm hover:bg-emerald-50">
+                    @include('dashboard.partials.icon', ['name' => 'chart', 'class' => 'mr-2 h-4 w-4'])
                     Lihat Histori
                 </a>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Total Ruangan</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Total Ruangan</p>
+                        @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-5 w-5 text-emerald-100'])
+                    </div>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['rooms']) }}</p>
                     <p class="mt-2 text-sm text-emerald-50">Ruangan yang dipantau</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Sensor Aktif</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Sensor Aktif</p>
+                        @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-5 w-5 text-cyan-100'])
+                    </div>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['active_devices']) }}</p>
                     <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['online_devices']) }} mengirim data terbaru</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Data Hari Ini</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Data Hari Ini</p>
+                        @include('dashboard.partials.icon', ['name' => 'thermometer', 'class' => 'h-5 w-5 text-amber-100'])
+                    </div>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['readings_today']) }}</p>
                     <p class="mt-2 text-sm text-emerald-50">Pembacaan suhu diterima</p>
                 </div>
                 <div class="rounded-3xl border border-white/20 bg-white/15 p-6 shadow-sm backdrop-blur">
-                    <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Peringatan Suhu</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <p class="text-sm font-medium uppercase tracking-wide text-emerald-50">Peringatan Suhu</p>
+                        @include('dashboard.partials.icon', ['name' => 'gauge', 'class' => 'h-5 w-5 text-red-100'])
+                    </div>
                     <p class="mt-5 text-4xl font-bold">{{ number_format($stats['pending_alerts']) }}</p>
                     <p class="mt-2 text-sm text-emerald-50">{{ number_format($stats['failed_alerts']) }} notifikasi gagal terkirim</p>
                 </div>
@@ -49,29 +65,35 @@
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['rooms']) }}</p>
                     <p class="mt-3 text-sm text-slate-500">Ruangan monitoring aktif.</p>
                 </div>
-                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-sm font-bold text-emerald-700">RG</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                    @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-6 w-6'])
+                </span>
             </div>
         </div>
 
-        <div class="rounded-[22px] border border-amber-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
+        <div class="rounded-[22px] border border-sky-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
             <div class="flex items-start justify-between gap-4">
                 <div>
                     <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Sensor Aktif</p>
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['active_devices']) }}</p>
                     <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['online_devices']) }} baru mengirim data.</p>
                 </div>
-                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-sm font-bold text-amber-700">SN</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
+                    @include('dashboard.partials.icon', ['name' => 'sensor', 'class' => 'h-6 w-6'])
+                </span>
             </div>
         </div>
 
-        <div class="rounded-[22px] border border-teal-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
+        <div class="rounded-[22px] border border-orange-100 bg-white p-6 shadow-xl shadow-emerald-950/5">
             <div class="flex items-start justify-between gap-4">
                 <div>
                     <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Data Hari Ini</p>
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['readings_today']) }}</p>
                     <p class="mt-3 text-sm text-slate-500">Pembacaan suhu diterima.</p>
                 </div>
-                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-100 text-sm font-bold text-teal-700">°C</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-700">
+                    @include('dashboard.partials.icon', ['name' => 'thermometer', 'class' => 'h-6 w-6'])
+                </span>
             </div>
         </div>
 
@@ -82,7 +104,9 @@
                     <p class="mt-8 text-4xl font-bold text-slate-900">{{ number_format($stats['pending_alerts']) }}</p>
                     <p class="mt-3 text-sm text-slate-500">{{ number_format($stats['failed_alerts']) }} notifikasi gagal.</p>
                 </div>
-                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-sm font-bold text-red-700">AL</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-700">
+                    @include('dashboard.partials.icon', ['name' => 'gauge', 'class' => 'h-6 w-6'])
+                </span>
             </div>
         </div>
     </div>
